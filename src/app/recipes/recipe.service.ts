@@ -1,5 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Recipe } from './recipe.model';
+import { Ingredient } from '../shared/ingredient.model';
+import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +11,34 @@ export class RecipeService {
   recipeSelected = new EventEmitter<Recipe>();
 
   private recipes: Recipe[] = [
-    new Recipe('Keto Chicken Enchilada','The other day I was thinking about what kind of Mexican style food I could make that would not only LOOK the part, but taste satisfying too. The idea hit me that if I melted cheese to JUST the right consistency I could roll it around some stuffing to make an Enchilada type of dish. Usually when it comes to traditional enchiladas I prefer cheese enchiladas with red sauce, but I thought that stuffing Cheese with Cheese might be overkill. (Feel free to knock yourself out though if you want to try that cheese inception)', 'https://keto-daily.com/wp-content/uploads/2018/07/Keto-Chicken-Enchilada-Recipe-Wide.jpg'),
-    new Recipe('Lidia Bastianich\'s Stuffed Peppers','Heat a dutch oven large enough to hold the peppers upright in one layer over medium heat. Add the olive oil. When the oil is hot, add the onion, and cook until softened, about 10 minutes. Spoon about  half the onion into a large bowl to cool. ','https://www.cbc.ca/food/content/images/recipes/StuffedPeppers1.png')
+    new Recipe(
+      'chicken schnitzel',
+      'Chicken Schnitzel is a popular and tasty treat served throughout Israel. Schnitzel is Austrian in origin; it was traditionally made with veal (known as Wiener Schnitzel) or pork. The dish later found its way to Israel with European Jewish immigrants. Like many Jewish foods, immigrants adapted this regional dish to suit their unique dietary kosher laws. In the case of schnitzel, pork (which is treif) and veal (which was expensive and difficult to obtain) was replaced by chicken and turkey. The result is a tasty treat that can be found in nearly every restaurant in Israel.', 
+      'https://toriavey.com/images/2011/02/IMG_1544.jpg',
+      [
+        new Ingredient('Chicken',1),
+        new Ingredient('French Fries', 10)
+      ]),
+      
+    new Recipe('Matar Paneer',
+    'An everyday dish of cottage cheese and peas mingled in a rich, tomato gravy. Matar Paneer is a dish from India, made more often in North Indian homes in dinner menu or even for lunch. You can have it with chapati or naan and even mix with rice.',
+    'https://www.ndtv.com/cooks/images/matar.paneer.2.jpg',
+    [
+      new Ingredient('Cottage Cheese',1),
+      new Ingredient('Sweet Pea', 100)
+    ]
+    )
   ];
 
-  constructor() { }
+  constructor(private shoppingListService: ShoppingListService) { 
+
+  }
 
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  addIngredientsToShoppingList(ingredients: Ingredient[]) {
+    this.shoppingListService.addIngredients(ingredients);
   }
 }
