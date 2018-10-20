@@ -29,8 +29,8 @@ export class ShoppingListService {
     // which may not be the best way to do this
 
     // we will use a es6 feature, the spread operator which converts an array into a list
-    // here if we pust our ingredient array directly then the whole array will be pushed in ingredient
-    // array as an element 
+    // here if we push our ingredient array directly then the whole array will be pushed as an element 
+    // in ingredient array
     this.ingredients.push(...ingredients);
     this.ingredientsChanged.emit(this.ingredients.slice());
   }
